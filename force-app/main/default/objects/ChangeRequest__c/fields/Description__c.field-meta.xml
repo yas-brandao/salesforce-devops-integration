@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Description__c</fullName>
+    <description>Área de texto para descrever a mudança solicitada.</description>
+    <inlineHelpText>Preencha com:
+- User Story associada a essa mudança
+- Mudança realizada
+- Motivo para a mudança</inlineHelpText>
+    <label>Descrição</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>
