@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>ChangeRequestAPI</members>
         <members>ExternalAPIConsumer</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ChangeRequest__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>ChangeRequest__c.Description__c</members>
+        <members>ChangeRequest__c.Origin__c</members>
+        <members>ChangeRequest__c.Status__c</members>
+        <name>CustomField</name>
     </types>
     <version>64.0</version>
 </Package>
