@@ -4,5 +4,9 @@
         <members>ChangeRequest__c</members>
         <name>CustomObject</name>
     </types>
+    <types>
+        <members>ChangeRequestAPI</members>
+        <name>ApexClass</name>
+    </types>
     <version>64.0</version>
 </Package>
