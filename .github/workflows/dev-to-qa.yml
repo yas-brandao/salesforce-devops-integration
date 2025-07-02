@@ -1,0 +1,24 @@
+name: Deploy DEV → QA
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Salesforce CLI
+        run: npm install sfdx-cli --global
+
+      - name: Auth QA
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL_QA }}" > authfile.txt
+          sfdx auth:sfdxurl:store -f authfile.txt -a QAOrg
+
+      - name: Deploy to QA
+        run: sfdx force:source:deploy -p force-app -u QAOrg

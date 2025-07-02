@@ -1,0 +1,24 @@
+name: Deploy QA → UAT
+
+on:
+  push:
+    branches:
+      - uat
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Salesforce CLI
+        run: npm install sfdx-cli --global
+
+      - name: Auth UAT
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > authfile.txt
+          sfdx auth:sfdxurl:store -f authfile.txt -a UATOrg
+
+      - name: Deploy to UAT
+        run: sfdx force:source:deploy -p force-app -u UATOrg
