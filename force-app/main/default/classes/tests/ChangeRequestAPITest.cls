@@ -3,7 +3,7 @@ private class ChangeRequestAPITest {
 
     @isTest static void testGetChange() {
         // Criar registro teste
-        ChangeRequest__c cr = new ChangeRequest__c(Name = 'Teste CR', Status__c = 'Open');
+        ChangeRequest__c cr = new ChangeRequest__c(Name = 'Teste CR', Status__c = 'Draft');
         insert cr;
 
         // Montar requisição REST simulada
@@ -18,11 +18,11 @@ private class ChangeRequestAPITest {
         ChangeRequest__c result = ChangeRequestAPI.getChange();
 
         System.assertEquals(cr.Id, result.Id);
-        System.assertEquals('Open', result.Status__c);
+        System.assertEquals('Draft', result.Status__c);
     }
 
     @isTest static void testCreateChange() {
-        ChangeRequest__c newCR = new ChangeRequest__c(Name = 'PC-000', Status__c = 'Draft');
+        ChangeRequest__c newCR = new ChangeRequest__c(Name = 'PC-000', Status__c = 'Ready');
 
         Test.startTest();
         String newId = ChangeRequestAPI.createChange(newCR);
@@ -30,6 +30,6 @@ private class ChangeRequestAPITest {
 
         ChangeRequest__c insertedCR = [SELECT Id, Name, Status__c FROM ChangeRequest__c WHERE Id = :newId];
         System.assertEquals('PC-000', insertedCR.Name);
-        System.assertEquals('Draft', insertedCR.Status__c);
+        System.assertEquals('Ready', insertedCR.Status__c);
     }
 }
