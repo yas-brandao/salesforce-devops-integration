@@ -1,0 +1,27 @@
+name: Deploy DEV → QA
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: QA
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Instalar Salesforce CLI
+        run: npm install sfdx-cli --global
+
+      - name: Autenticar na QA
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL_QA }}" > authfile.txt
+          sfdx force:auth:sfdxurl:store -f authfile.txt -a QAPlayground
+
+      - name: Deploy real
+        run: |
+          sfdx force:source:deploy -p force-app -u QAPlayground --testlevel RunLocalTests --json
