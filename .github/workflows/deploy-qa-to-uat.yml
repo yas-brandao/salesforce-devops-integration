@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - uat
-  pull_request:
-    branches:
-      - uat
 
 jobs:
   deploy:
@@ -17,13 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Salesforce CLI
+      - name: Instalar Salesforce CLI
         run: npm install sfdx-cli --global
 
-      - name: Auth UAT
+      - name: Autenticar na UAT
         run: |
           echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > authfile.txt
           sfdx force:auth:sfdxurl:store -f authfile.txt -a UATPlayground
 
-      - name: Deploy to UAT
-        run: sfdx force:source:deploy -p force-app -u UATPlayground
+      - name: Deploy real
+        run: |
+          sfdx force:source:deploy -p force-app -u UATPlayground --testlevel RunLocalTests --json
