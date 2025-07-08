@@ -1,0 +1,27 @@
+name: Validate QA → UAT
+
+on:
+  pull_request:
+    branches:
+      - uat
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    environment:
+      name: UAT
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Instalar Salesforce CLI
+        run: npm install sfdx-cli --global
+
+      - name: Autenticar na UAT
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > authfile.txt
+          sfdx force:auth:sfdxurl:store -f authfile.txt -a UATPlayground
+
+      - name: Validar deploy (checkonly)
+        run: |
+          sfdx force:source:deploy -p force-app -u UATPlayground --checkonly --testlevel RunLocalTests --json
