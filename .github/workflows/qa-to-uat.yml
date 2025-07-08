@@ -23,7 +23,7 @@ jobs:
       - name: Auth UAT
         run: |
           echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > authfile.txt
-          sfdx auth:sfdxurl:store -f authfile.txt -a UATPlayground
+          sfdx force:auth:sfdxurl:store -f authfile.txt -a UATPlayground
 
       - name: Deploy to UAT
         run: sfdx force:source:deploy -p force-app -u UATPlayground
