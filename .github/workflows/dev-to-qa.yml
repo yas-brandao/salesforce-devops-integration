@@ -4,10 +4,15 @@ on:
   push:
     branches:
       - qa
+  pull_request:
+    branches:
+      - qa
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: QA
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,7 +23,7 @@ jobs:
       - name: Auth QA
         run: |
           echo "${{ secrets.SFDX_AUTH_URL_QA }}" > authfile.txt
-          sfdx auth:sfdxurl:store -f authfile.txt -a QAOrg
+          sfdx auth:sfdxurl:store -f authfile.txt -a QAPlayground
 
       - name: Deploy to QA
-        run: sfdx force:source:deploy -p force-app -u QAOrg
+        run: sfdx force:source:deploy -p force-app -u QAPlayground

@@ -4,10 +4,15 @@ on:
   push:
     branches:
       - uat
+  pull_request:
+    branches:
+      - uat
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: UAT
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,7 +23,7 @@ jobs:
       - name: Auth UAT
         run: |
           echo "${{ secrets.SFDX_AUTH_URL_UAT }}" > authfile.txt
-          sfdx auth:sfdxurl:store -f authfile.txt -a UATOrg
+          sfdx auth:sfdxurl:store -f authfile.txt -a UATPlayground
 
       - name: Deploy to UAT
-        run: sfdx force:source:deploy -p force-app -u UATOrg
+        run: sfdx force:source:deploy -p force-app -u UATPlayground
