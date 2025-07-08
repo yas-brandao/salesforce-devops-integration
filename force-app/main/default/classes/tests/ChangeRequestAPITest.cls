@@ -22,14 +22,14 @@ private class ChangeRequestAPITest {
     }
 
     @isTest static void testCreateChange() {
-        ChangeRequest__c newCR = new ChangeRequest__c(Name = 'Nova Mudança', Status__c = 'New');
+        ChangeRequest__c newCR = new ChangeRequest__c(Name = 'PC-000', Status__c = 'Draft');
 
         Test.startTest();
         String newId = ChangeRequestAPI.createChange(newCR);
         Test.stopTest();
 
         ChangeRequest__c insertedCR = [SELECT Id, Name, Status__c FROM ChangeRequest__c WHERE Id = :newId];
-        System.assertEquals('Nova Mudança', insertedCR.Name);
-        System.assertEquals('New', insertedCR.Status__c);
+        System.assertEquals('PC-000', insertedCR.Name);
+        System.assertEquals('Draft', insertedCR.Status__c);
     }
 }
